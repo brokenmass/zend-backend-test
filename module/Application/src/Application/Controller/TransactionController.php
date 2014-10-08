@@ -31,35 +31,36 @@ class TransactionController extends AbstractActionController
 
 		$transactions = $db->getMerchantTransactions($merchantId);
 
-		echo str_pad("", 35, "-")."\r\n";
-		echo str_pad("Transaction list for", 35, " ",STR_PAD_BOTH)."\r\n";
-		echo str_pad("Merchant ".$merchantId, 35, " ",STR_PAD_BOTH)."\r\n";
-		echo str_pad("", 35, "-")."\r\n";
+		echo str_pad("", 50, "-")."\r\n";
+		echo str_pad("Transaction list for", 50, " ",STR_PAD_BOTH)."\r\n";
+		echo str_pad("Merchant ".$merchantId, 50, " ",STR_PAD_BOTH)."\r\n";
+		echo str_pad("", 50, "-")."\r\n";
 
 		if(sizeof($transactions)>1)
 			{
 			echo str_pad("#", 5, " ", STR_PAD_LEFT) .
 				str_pad("DATE", 15, " ", STR_PAD_LEFT) .
 				str_pad("AMOUNT ", 15, " ", STR_PAD_LEFT) .
+				str_pad("ORIGINAL ", 15, " ", STR_PAD_LEFT) .
 				"\r\n";
 
 			foreach ($transactions as $index => $transaction)
 				{
 				$converted = $converter->convert($transaction["value"]);
-				echo str_pad($index, 5, " ", STR_PAD_LEFT) .
+				echo str_pad($index+1, 5, " ", STR_PAD_LEFT) .
 					str_pad($transaction["date"], 15, " ", STR_PAD_LEFT) .
 					str_pad($converted, 15, " ", STR_PAD_LEFT) .
 					$this->mb_str_pad("(".($transaction["value"]).")", 15, " ", STR_PAD_LEFT) .
 					"\r\n";
 				}
-			echo str_pad("", 35, "-")."\r\n";
+			echo str_pad("", 50, "-")."\r\n";
 			$converter->printRates();
 			}
 		else
 			{
-			echo str_pad("No available transactions", 35, " ",STR_PAD_BOTH)."\r\n";
+			echo str_pad("No available transactions", 50, " ",STR_PAD_BOTH)."\r\n";
 			}
-		echo str_pad("", 35, "-")."\r\n";
+		echo str_pad("", 50, "-")."\r\n";
 		}
 
 	private function mb_str_pad ($input, $pad_length, $pad_string, $pad_style, $encoding="UTF-8")
